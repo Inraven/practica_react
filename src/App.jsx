@@ -13,7 +13,11 @@ import Paper from '@mui/material/Paper';
 
 
 function App() {
+
   const [count, setCount] = useState(0)
+  const [data, setData] = useState([]); // Estado para guardar la información
+  const url = "https://jsonplaceholder.typicode.com/users"; // URL de prueba
+
 
   useEffect(() => {
     if(count > 10){
@@ -22,15 +26,14 @@ function App() {
     } 
   }, [count]);
 
-  function createData(name, lastName, age) {
-    return { name, lastName, age };
-  }
+  useEffect(()=>{
 
-  const rows = [
-    createData('Angel', 'Ruiz', 21),
-    createData('Socio', 'god', 15),
-    createData('Jesus', 'Valverde', 17),
-  ];
+    fetch(url)
+    .then(response => response.json())
+    .then(data => setData(data));
+
+
+  }, []);
 
   return (
     <>
@@ -65,29 +68,36 @@ function App() {
 
               <TableHead>
                 <TableRow>
+                  <TableCell align="center">ID</TableCell>
                   <TableCell align="center">Nombre</TableCell>
-                  <TableCell align="center">Apellido</TableCell>
-                  <TableCell align="center">Edad</TableCell>
+                  <TableCell align="center">Usuario</TableCell>
+                  <TableCell align="center">Correo</TableCell>
+                  <TableCell align="center">Ciudad</TableCell>
                 </TableRow>
               </TableHead>
+
               <TableBody>
-                {rows.map((row) => (
+                {data.map((user) => (
                   <TableRow
-                    key={row.name}
-                    sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                    key={user.id}
+                    sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                   >
-                    <TableCell align="center">{row.name}</TableCell>
-                    <TableCell align="center">{row.lastName}</TableCell>
-                    <TableCell align="center">{row.age}</TableCell>
+                    <TableCell align="center">{user.id}</TableCell>
+                    <TableCell align="center">{user.name}</TableCell>
+                    <TableCell align="center">{user.username}</TableCell>
+                    <TableCell align="center">{user.email}</TableCell>
+                    <TableCell align="center">{user.address.city}</TableCell>
                   </TableRow>
                 ))}
               </TableBody>
+
             </Table>
           </TableContainer>
 
         <p>
           hola prueba de angel ruiz
         </p>
+
       </div>
 
       <p className="read-the-docs">
