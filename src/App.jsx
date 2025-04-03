@@ -12,9 +12,10 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 
 
+
 function App() {
 
-  const [count, setCount] = useState(0)
+  const [count, setCount] = useState(0);
   const [data, setData] = useState([]); // Estado para guardar la información
   const url = "https://jsonplaceholder.typicode.com/users"; // URL de prueba
 
